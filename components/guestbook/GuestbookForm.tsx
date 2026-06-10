@@ -13,6 +13,7 @@ export function GuestbookForm() {
   const [imageType, setImageType] = useState<ImageType>("upload");
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [drawingBlob, setDrawingBlob] = useState<Blob | null>(null);
+  const [drawingResetKey, setDrawingResetKey] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -59,6 +60,7 @@ export function GuestbookForm() {
       setMessage("");
       setUploadFile(null);
       setDrawingBlob(null);
+      setDrawingResetKey((currentKey) => currentKey + 1);
       setStatus("방명록이 등록되었습니다. 보드에서 새 포스트잇을 확인해 보세요.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "방명록 등록에 실패했습니다.");
@@ -131,7 +133,7 @@ export function GuestbookForm() {
           )}
         </div>
       ) : (
-        <DrawingCanvas onChange={setDrawingBlob} />
+        <DrawingCanvas resetSignal={drawingResetKey} onChange={setDrawingBlob} />
       )}
 
       {error && <p className="form-message error" role="alert">{error}</p>}

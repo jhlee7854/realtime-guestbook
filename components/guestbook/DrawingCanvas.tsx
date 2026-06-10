@@ -1,29 +1,44 @@
 "use client";
 
-import { PointerEvent, useEffect, useRef, useState } from "react";
+import { PointerEvent, useCallback, useEffect, useRef, useState } from "react";
 
 type DrawingCanvasProps = {
   onChange: (blob: Blob | null) => void;
+  resetSignal?: number;
 };
 
 const CANVAS_WIDTH = 720;
 const CANVAS_HEIGHT = 420;
 
-export function DrawingCanvas({ onChange }: DrawingCanvasProps) {
+export function DrawingCanvas({ onChange, resetSignal = 0 }: DrawingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [color, setColor] = useState("#2f2a26");
   const [size, setSize] = useState(8);
   const [isErasing, setIsErasing] = useState(false);
   const [hasDrawing, setHasDrawing] = useState(false);
 
-  useEffect(() => {
+  const fillCanvasBackground = useCallback(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const context = canvas.getContext("2d");
-    if (!context) return;
+    const context = canvas?.getContext("2d");
+    if (!canvas || !context) return;
     context.fillStyle = "#fffaf0";
     context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   }, []);
+
+  const clearCanvas = useCallback(() => {
+    fillCanvasBackground();
+    setHasDrawing(false);
+    onChange(null);
+  }, [fillCanvasBackground, onChange]);
+
+  useEffect(() => {
+    fillCanvasBackground();
+  }, [fillCanvasBackground]);
+
+  useEffect(() => {
+    if (resetSignal === 0) return;
+    clearCanvas();
+  }, [clearCanvas, resetSignal]);
 
   function emitChange() {
     const canvas = canvasRef.current;
@@ -67,16 +82,6 @@ export function DrawingCanvas({ onChange }: DrawingCanvasProps) {
     if (hasDrawing) {
       emitChange();
     }
-  }
-
-  function clearCanvas() {
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
-    context.fillStyle = "#fffaf0";
-    context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    setHasDrawing(false);
-    onChange(null);
   }
 
   return (
