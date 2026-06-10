@@ -123,10 +123,9 @@ Supabase Realtime 구독 대상:
 - 모달이 열리면 포커스를 모달 내부로 이동하고, 닫히면 이전 위치로 돌려야 한다.
 - 버튼에는 명확한 접근 가능한 이름을 제공한다.
 
-## 열린 결정 사항
+## 결정된 사항
 
-- Next.js App Router와 Pages Router 중 무엇을 사용할지 결정해야 한다.
-- Tailwind CSS와 CSS Modules 중 무엇을 사용할지 결정해야 한다.
-- Supabase 인증 정책을 결정해야 한다. 초기 제품은 RLS 정책을 신중히 설정한 익명 삽입 구조로 시작할 수 있다.
-- 업로드 이미지를 공개 URL로 제공할지, signed URL로 제공할지 결정해야 한다.
-
+- 라우팅은 Next.js App Router를 사용한다.
+- 스타일링은 별도 프레임워크 없이 전역 CSS를 우선 사용한다.
+- 방명록 이미지는 `guestbook-images` public Storage 버킷에 저장하고 public URL을 `guestbook_posts.image_url`에 저장한다.
+- 익명 방문자 작성 흐름을 우선 지원하기 위해 공개 읽기와 익명 insert를 허용하는 RLS 정책을 사용한다.

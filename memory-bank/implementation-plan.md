@@ -99,3 +99,12 @@ React 또는 Next.js와 Supabase Realtime, Supabase Storage를 사용해 배포 
 - 실시간 동작 검증 절차를 문서화한다.
 - 의미 있는 마일스톤마다 `memory-bank/progress.md`를 갱신한다.
 
+
+## 구현 현황
+
+- 1단계 프로젝트 설정은 Next.js App Router와 전역 CSS 기준으로 1차 완료되었다. 단, 현재 환경의 npm registry 403 제한 때문에 의존성 설치와 lockfile 생성은 다음 작업으로 남아 있다.
+- 2단계 Supabase 스키마와 Storage 설정은 `supabase/schema.sql`과 `README.md`에 1차 문서화되었다.
+- 3단계 방명록 작성 화면은 이름/메시지 입력, 사진 업로드, 캔버스 그리기, Storage 업로드, `guestbook_posts` 생성 흐름까지 1차 구현되었다.
+- 4단계 포스트잇 보드는 기존 데이터 조회, 댓글 수 집계, 포스트잇 렌더링, 방명록 insert 실시간 구독까지 1차 구현되었다.
+- 5단계 상세 보기와 댓글은 모달, 기존 댓글 조회, 댓글 작성, 댓글 insert 실시간 구독까지 1차 구현되었다.
+- 6~7단계는 빌드/실환경 검증 후 보완이 필요하다.
