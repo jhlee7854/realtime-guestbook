@@ -2,6 +2,7 @@ export type ImageType = "upload" | "drawing";
 
 export type GuestbookPost = {
   id: string;
+  user_id: string | null;
   author_name: string;
   message: string;
   image_url: string;
@@ -17,6 +18,7 @@ export type GuestbookPostWithCount = GuestbookPost & {
 export type Comment = {
   id: string;
   post_id: string;
+  user_id: string | null;
   author_name: string;
   content: string;
   created_at: string;

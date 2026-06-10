@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import { createGuestbookPost } from "@/lib/supabase/guestbook";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import type { ImageType } from "@/types/guestbook";
 import { DrawingCanvas } from "./DrawingCanvas";
 
 export function GuestbookForm() {
+  const { user, isLoading: isAuthLoading } = useAuthUser();
   const [authorName, setAuthorName] = useState("");
   const [message, setMessage] = useState("");
   const [imageType, setImageType] = useState<ImageType>("upload");
@@ -47,6 +49,11 @@ export function GuestbookForm() {
       return;
     }
 
+    if (!user) {
+      setError("방명록을 남기려면 로그인이 필요합니다.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await createGuestbookPost({
@@ -67,6 +74,26 @@ export function GuestbookForm() {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (isAuthLoading) {
+    return <p className="form-message">로그인 상태를 확인하는 중입니다...</p>;
+  }
+
+  if (!user) {
+    return (
+      <div className="auth-gate">
+        <p className="helper-text">방명록 작성은 로그인 사용자만 할 수 있습니다.</p>
+        <div className="form-actions">
+          <Link href="/login" className="secondary-link">
+            로그인하기
+          </Link>
+          <Link href="/board" className="secondary-link">
+            보드 보러가기
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   return (

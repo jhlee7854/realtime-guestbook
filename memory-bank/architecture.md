@@ -46,6 +46,7 @@
 ### guestbook_posts
 
 - `id`: UUID 기본 키
+- `user_id`: Auth 사용자 UUID, 기존 익명 데이터 호환을 위해 nullable
 - `author_name`: 필수 텍스트
 - `message`: 필수 텍스트
 - `image_url`: 필수 텍스트
@@ -57,6 +58,7 @@
 
 - `id`: UUID 기본 키
 - `post_id`: `guestbook_posts.id`를 참조하는 UUID 외래 키
+- `user_id`: Auth 사용자 UUID, 기존 익명 데이터 호환을 위해 nullable
 - `author_name`: 필수 텍스트
 - `content`: 필수 텍스트
 - `created_at`: timestamptz
@@ -71,8 +73,9 @@
 
 권장 경로:
 
-- `uploads/{postId 또는 uuid}.{ext}`: 업로드 사진
-- `drawings/{postId 또는 uuid}.png`: 캔버스 그림
+- `users/{userId}/uploads/{postId 또는 uuid}.{ext}`: 로그인 사용자 업로드 사진
+- `users/{userId}/drawings/{postId 또는 uuid}.png`: 로그인 사용자 캔버스 그림
+- 기존 `uploads/*`, `drawings/*` 경로는 과거 익명 데이터 읽기 호환을 위해 유지한다.
 
 ## 실시간 모델
 
@@ -128,4 +131,6 @@ Supabase Realtime 구독 대상:
 - 라우팅은 Next.js App Router를 사용한다.
 - 스타일링은 별도 프레임워크 없이 전역 CSS를 우선 사용한다.
 - 방명록 이미지는 `guestbook-images` public Storage 버킷에 저장하고 public URL을 `guestbook_posts.image_url`에 저장한다.
-- 익명 방문자 작성 흐름을 우선 지원하기 위해 공개 읽기와 익명 insert를 허용하는 RLS 정책을 사용한다.
+- 공개 보드 경험을 유지하기 위해 방명록과 댓글 읽기는 공개한다.
+- 방명록 작성, 댓글 작성, 이미지 업로드는 Supabase Auth 로그인 사용자에게만 허용한다.
+- 기존 익명 데이터 보존을 위해 `user_id`는 nullable로 유지한다.

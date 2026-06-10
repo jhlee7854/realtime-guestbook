@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { AuthStatus } from "@/components/auth/AuthStatus";
 import { useGuestbookPosts } from "@/hooks/useGuestbookPosts";
 import type { GuestbookPostWithCount } from "@/types/guestbook";
 import { PostDetailModal } from "./PostDetailModal";
@@ -15,6 +16,7 @@ export function BoardView() {
     <main className="board-page">
       <header className="board-header">
         <div>
+          <AuthStatus />
           <p className="eyebrow">Realtime board</p>
           <h1>모두의 포스트잇 방명록</h1>
           <p>새 방명록과 댓글이 Supabase Realtime으로 자동 반영됩니다.</p>
