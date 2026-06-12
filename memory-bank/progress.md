@@ -37,12 +37,13 @@
 - 기존 공개 보드 읽기는 유지하고, 새 row에는 `user_id`를 저장하도록 데이터 접근 함수를 수정했다.
 - `npm run typecheck`와 `npm run build`가 통과했다.
 - `npm run lint`는 Next.js 16에서 `next lint` 명령이 유효하지 않아 실패했다.
+- Supabase 원격 DB 조회 결과를 바탕으로 수동 적용용 `supabase/manual-auth-migration.sql`을 추가했다.
 
 ## 다음 작업
 
 1. Realtime publication에 `guestbook_posts`, `comments` 테이블이 포함되었는지 확인한다.
 2. Supabase Auth Email provider, Site URL, Redirect URL을 실제 프로젝트 Dashboard에서 설정한다.
-3. `supabase/schema.sql`을 원격 프로젝트에 적용해 `user_id`, RLS, Storage upload 정책을 갱신한다.
+3. `supabase/manual-auth-migration.sql`을 원격 프로젝트에 적용해 `user_id`, RLS, Storage upload 정책, Realtime publication을 갱신한다.
 4. 로그인/회원가입, 방명록 작성, 댓글 작성, Storage 업로드, Realtime 갱신을 실환경에서 수동 검증한다.
 5. Next.js 16에 맞는 lint 구성을 별도로 추가하거나 `lint` 스크립트를 갱신한다.
 6. 필요하면 이미지 용량 제한, 파일 타입 검사, 댓글 삭제/관리 기능을 추가한다.
