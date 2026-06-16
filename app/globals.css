@@ -46,13 +46,15 @@ img {
 }
 
 .home-page,
-.board-page {
+.board-page,
+.auth-page {
   width: min(1180px, calc(100% - 32px));
   margin: 0 auto;
   padding: 48px 0;
 }
 
-.hero-card {
+.hero-card,
+.auth-card {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(320px, 1.2fr);
   gap: 32px;
@@ -100,7 +102,9 @@ h1 {
 }
 
 .guestbook-form,
-.comment-form {
+.comment-form,
+.auth-form,
+.auth-gate {
   display: grid;
   gap: 18px;
 }
@@ -142,7 +146,8 @@ textarea {
   resize: vertical;
 }
 
-.image-mode {
+.image-mode,
+.auth-mode {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
@@ -152,14 +157,16 @@ textarea {
   border-radius: 20px;
 }
 
-.image-mode label {
+.image-mode label,
+.auth-mode label {
   display: inline-flex;
   gap: 8px;
   align-items: center;
   font-weight: 700;
 }
 
-.image-mode input {
+.image-mode input,
+.auth-mode input {
   width: auto;
   margin: 0;
 }
@@ -247,6 +254,33 @@ button:hover,
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+}
+
+.auth-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.auth-status button {
+  padding: 8px 12px;
+  font-size: 0.88rem;
+}
+
+.auth-gate {
+  padding: 18px;
+  border: 1px dashed #ddb98f;
+  border-radius: 20px;
+  background: #fffdf8;
+}
+
+.auth-gate.compact {
+  gap: 12px;
 }
 
 .helper-text {
@@ -425,6 +459,7 @@ button:hover,
   }
 
   .hero-card,
+  .auth-card,
   .post-modal {
     grid-template-columns: 1fr;
     padding: 20px;

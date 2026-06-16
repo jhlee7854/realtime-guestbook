@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AuthStatus } from "@/components/auth/AuthStatus";
 import { GuestbookForm } from "@/components/guestbook/GuestbookForm";
 
 export default function Home() {
@@ -6,6 +7,7 @@ export default function Home() {
     <main className="home-page">
       <section className="hero-card">
         <div className="hero-copy">
+          <AuthStatus />
           <p className="eyebrow">Realtime guestbook</p>
           <h1>오늘의 추억을 사진이나 그림으로 남겨 주세요.</h1>
           <p>

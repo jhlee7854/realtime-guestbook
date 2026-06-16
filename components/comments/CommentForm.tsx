@@ -1,6 +1,8 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import Link from "next/link";
+import { useAuthUser } from "@/hooks/useAuthUser";
 import { createComment } from "@/lib/supabase/guestbook";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 
@@ -9,6 +11,7 @@ type CommentFormProps = {
 };
 
 export function CommentForm({ postId }: CommentFormProps) {
+  const { user, isLoading: isAuthLoading } = useAuthUser();
   const [authorName, setAuthorName] = useState("");
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,6 +31,11 @@ export function CommentForm({ postId }: CommentFormProps) {
       return;
     }
 
+    if (!user) {
+      setError("댓글을 남기려면 로그인이 필요합니다.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       await createComment({ postId, authorName, content });
@@ -37,6 +45,21 @@ export function CommentForm({ postId }: CommentFormProps) {
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  if (isAuthLoading) {
+    return <p className="helper-text">로그인 상태를 확인하는 중입니다...</p>;
+  }
+
+  if (!user) {
+    return (
+      <div className="auth-gate compact">
+        <p className="helper-text">댓글 작성은 로그인 사용자만 할 수 있습니다.</p>
+        <Link href="/login" className="secondary-link">
+          로그인하기
+        </Link>
+      </div>
+    );
   }
 
   return (

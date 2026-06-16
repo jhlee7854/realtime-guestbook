@@ -23,6 +23,7 @@ React 또는 Next.js와 Supabase Realtime, Supabase Storage를 사용해 배포 
   - `comments.created_at`
 - `guestbook-images` Storage 버킷을 설정한다.
 - 공개 또는 익명 방명록 사용을 위한 Row Level Security 정책을 정의한다.
+- Supabase Auth 기반 작성 권한과 Storage 업로드 소유권 정책을 정의한다.
 - 필요한 SQL과 Supabase 대시보드 설정 절차를 문서화한다.
 
 ## 3단계: 방명록 작성 화면
@@ -41,6 +42,7 @@ React 또는 Next.js와 Supabase Realtime, Supabase Storage를 사용해 배포 
 - 캔버스 그림을 PNG Blob으로 변환한다.
 - 선택된 이미지를 Supabase Storage에 업로드한다.
 - `guestbook_posts` 레코드를 생성한다.
+- 로그인 사용자 id를 `guestbook_posts.user_id`에 저장한다.
 - 로딩, 유효성 검사, 오류 상태를 표시한다.
 
 ## 4단계: 포스트잇 보드
@@ -61,6 +63,7 @@ React 또는 Next.js와 Supabase Realtime, Supabase Storage를 사용해 배포 
 - 선택한 포스트잇의 기존 댓글을 조회한다.
 - 댓글 작성자 이름과 댓글 내용 입력 폼을 만든다.
 - 댓글을 Supabase에 저장한다.
+- 로그인 사용자 id를 `comments.user_id`에 저장한다.
 - 선택한 포스트잇의 새 댓글 insert 이벤트를 구독한다.
 - 새 댓글이 들어오면 새로고침 없이 댓글 목록을 갱신한다.
 - 모달을 닫거나 다른 포스트잇으로 전환할 때 실시간 구독을 정리한다.
@@ -107,4 +110,5 @@ React 또는 Next.js와 Supabase Realtime, Supabase Storage를 사용해 배포 
 - 3단계 방명록 작성 화면은 이름/메시지 입력, 사진 업로드, 캔버스 그리기, Storage 업로드, `guestbook_posts` 생성 흐름까지 1차 구현되었다.
 - 4단계 포스트잇 보드는 기존 데이터 조회, 댓글 수 집계, 포스트잇 렌더링, 방명록 insert 실시간 구독까지 1차 구현되었다.
 - 5단계 상세 보기와 댓글은 모달, 기존 댓글 조회, 댓글 작성, 댓글 insert 실시간 구독까지 1차 구현되었다.
+- Supabase Auth 기반 로그인/회원가입, 세션 갱신 `proxy.ts`, 로그인 사용자 전용 방명록/댓글 작성 흐름이 추가되었다.
 - 6~7단계는 빌드/실환경 검증 후 보완이 필요하다.
