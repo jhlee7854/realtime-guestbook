@@ -38,6 +38,7 @@
 - `npm run typecheck`와 `npm run build`가 통과했다.
 - `npm run lint`는 Next.js 16에서 `next lint` 명령이 유효하지 않아 실패했다.
 - Supabase 원격 DB 조회 결과를 바탕으로 수동 적용용 `supabase/manual-auth-migration.sql`을 추가했다.
+- 인증 콜백의 `next` 리디렉션 값을 내부 상대 경로로 제한해 외부 URL 또는 프로토콜 상대 URL로 이동하지 않도록 보완했다.
 
 ## 다음 작업
 
